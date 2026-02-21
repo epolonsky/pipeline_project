@@ -36,14 +36,14 @@ This pipeline automates the following tasks:
 │   ├── SRR5660045_1.fastq
 │   └── SRR5660045_2.fastq
 ├── sample_data/                  # Small test FASTQ files 
-│   ├── SRR5660030_1_sample.fastq
-│   ├── SRR5660030_2_sample.fastq
-│   ├── SRR5660033_1_sample.fastq
-│   ├── SRR5660033_2_sample.fastq
-│   ├── SRR5660044_1_sample.fastq
-│   ├── SRR5660044_2_sample.fastq
-│   ├── SRR5660045_1_sample.fastq
-│   └── SRR5660045_2_sample.fastq
+│   ├── SRR5660030_1.fastq
+│   ├── SRR5660030_2.fastq
+│   ├── SRR5660033_1.fastq
+│   ├── SRR5660033_2.fastq
+│   ├── SRR5660044_1.fastq
+│   ├── SRR5660044_2.fastq
+│   ├── SRR5660045_1.fastq
+│   └── SRR5660045_2.fastq
 ├── ref/                          # HCMV reference genome & CDS
 ├── indexes/                      # kallisto & Bowtie2 indices
 ├── results/                      # Output: counts, kallisto results, sleuth results
@@ -89,7 +89,7 @@ cd pipeline-project
 ## Run the entire pipeline with sample data:
 
 ```bash
-snakemake -s snakefile --cores 4 fastq_dir="sample_data"
+snakemake -s snakefile --cores 4 --config fastq_dir="sample_data" > snakemake.log 2>&1
 ```
 This command executes all rules from the snakefile, generating:
 PipelineReport.txt
@@ -117,6 +117,12 @@ fasterq-dump SRR5660033 --split-files --outdir fastq
 fasterq-dump SRR5660044 --split-files --outdir fastq
 fasterq-dump SRR5660045 --split-files --outdir fastq
 ```
+
+## Run the entire pipeline with the full data set
+```bash
+snakemake -s snakefile --cores 4 --config fastq_dir="fastq" > snakemake.log 2>&1
+```
+
 ## Expected Outputs
 
 After running the full pipeline with all test or real data, the following files and directories will be generated:
