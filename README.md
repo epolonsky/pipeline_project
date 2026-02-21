@@ -70,7 +70,7 @@ NCBI datasets CLI
 | SRR5660044  | Donor 3, 2 dpi    |
 | SRR5660045  | Donor 3, 6 dpi    |
 
-Each test file contains ~10,000 reads for quick pipeline verification.
+Each test file contains 40,000 reads for quick pipeline verification.
 
 # Running the Pipeline
 
