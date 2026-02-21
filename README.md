@@ -7,11 +7,12 @@ Snakemake pipeline for HCMV transcriptome analysis. Automates quantification, di
 3. Differential expression analysis using R / sleuth.
 4. Filter reads mapping to HCMV genome using Bowtie2.
 5. Assemble filtered reads with SPAdes.
-6. Identify closest viral strains by BLASTing the longest contigs against a local 7. Betaherpesvirinae database.
-8. Generate a consolidated report (PipelineReport.txt) containing CDS counts, read mapping statistics, significant transcripts, and BLAST hits.
+6. Identify closest viral strains by BLASTing the longest contigs against a local Betaherpesvirinae database.
+7. Generate a consolidated report (PipelineReport.txt) containing CDS counts, read mapping statistics, significant transcripts, and BLAST hits.
 
 ## Repository Structure
 ```
+.
 ├── Snakefile                    # Main Snakemake workflow
 ├── scripts/                     # Python & R helper scripts
 │   ├── make_cds_fasta.py
@@ -47,11 +48,13 @@ NCBI datasets CLI
 
 ## The repository includes a subset of paired-end FASTQ files from SRA:
 
-Sample ID	Description
-SRR5660030	Donor 1, 2 dpi
-SRR5660033	Donor 1, 6 dpi
-SRR5660044	Donor 3, 2 dpi
-SRR5660045	Donor 3, 6 dpi
+| Sample ID   | Description       |
+|-------------|-------------------|
+| SRR5660030  | Donor 1, 2 dpi    |
+| SRR5660033  | Donor 1, 6 dpi    |
+| SRR5660044  | Donor 3, 2 dpi    |
+| SRR5660045  | Donor 3, 6 dpi    |
+
 
 Each test file contains ~10,000 reads for quick pipeline verification.
 
@@ -67,7 +70,7 @@ cd <repo_folder>
 ## Run the entire pipeline with test data:
 
 ```bash
-snakemake --cores 4
+snakemake --cores N
 ```
 This command executes all rules from the Snakefile, generating:
 PipelineReport.txt
@@ -95,3 +98,26 @@ fasterq-dump SRR5660033 --split-files --outdir fastq
 fasterq-dump SRR5660044 --split-files --outdir fastq
 fasterq-dump SRR5660045 --split-files --outdir fastq
 ```
+## Expected Outputs
+
+After running the full pipeline with all test or real data, the following files and directories will be generated:
+
+| Output Path / File                        | Description |
+|-------------------------------------------|-------------|
+| `PipelineReport.txt`                      | Consolidated report including CDS counts, read mapping statistics, significant transcripts (FDR < 0.05), and top BLAST hits. |
+| `counts/{sample}.counts.txt`              | Read counts for each sample: total original reads and reads mapping to HCMV. |
+| `results/report_reads_{sample}.txt`       | Text report for each sample with read counts before and after Bowtie2 filtering. |
+| `results/hcmv_cds_counts.txt`            | Total number of coding sequences (CDS) in the HCMV genome. |
+| `results/report_cds_count.txt`           | Text report summarizing the total CDS count for the HCMV genome. |
+| `results/hcm_cds.fasta`                   | FASTA file containing HCMV CDS sequences with protein IDs as headers. |
+| `indexes/hcmv_kallisto.idx`               | Kallisto transcriptome index built from HCMV CDS. |
+| `results/kallisto/{sample}/`              | Kallisto quantification output for each sample, including TPM values. |
+| `results/sleuth_significant.tsv`          | Sleuth results containing significant differentially expressed transcripts. |
+| `indexes/bowtie2_hcmv/`                   | Bowtie2 genome index for HCMV. |
+| `results/bowtie2/{sample}.mapped.bam`     | BAM file containing reads mapped to the HCMV genome. |
+| `spades/{sample}/contigs.fasta`           | SPAdes assembly contigs for each sample. |
+| `blast/{sample}.longest_contig.fasta`     | Longest contig from each SPAdes assembly for BLAST analysis. |
+| `blast/{sample}.blast.tsv`                | BLAST results of the longest contigs against the local Betaherpesvirinae database. |
+| `db/betaherpesvirinae.*`                  | Local BLAST database files for Betaherpesvirinae sequences. |
+
+> **Note:** The `{sample}` placeholders will be replaced by the actual sample IDs: `SRR5660030`, `SRR5660033`, `SRR5660044`, `SRR5660045`.
