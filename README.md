@@ -47,14 +47,13 @@ NCBI datasets CLI
 # Test Data
 
 ## The repository includes a subset of paired-end FASTQ files from SRA:
-```
-| Sample ID   | Description       |
-|-------------|-------------------|
+
+| Sample ID    | Description        |
+|-------------|------------------|
 | SRR5660030  | Donor 1, 2 dpi    |
 | SRR5660033  | Donor 1, 6 dpi    |
 | SRR5660044  | Donor 3, 2 dpi    |
 | SRR5660045  | Donor 3, 6 dpi    |
-```
 
 Each test file contains ~10,000 reads for quick pipeline verification.
 
