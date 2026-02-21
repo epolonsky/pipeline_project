@@ -9,6 +9,8 @@ Snakemake pipeline for HCMV transcriptome analysis. Automates quantification, di
 5. Assemble filtered reads with SPAdes.
 6. Identify closest viral strains by BLASTing the longest contigs against a local Betaherpesvirinae database.
 7. Generate a consolidated report (PipelineReport.txt) containing CDS counts, read mapping statistics, significant transcripts, and BLAST hits.
+    > A sample output report (`LastName_PipelineReport.txt`) is included in the repo root, generated from the full datasets.
+
 
 ## Repository Structure
 ```
