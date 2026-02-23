@@ -83,8 +83,8 @@ Each test file contains 10,000 reads for quick pipeline verification.
 ## After cloning the repository:
 
 ```bash
-git clone https://github.com/epolonsky/pipeline_project.git
-cd pipeline-project
+git clone https://github.com/epolonsky/pipeline-project.git
+cd pipeline_project
 ```
 ## Run the entire pipeline with sample data:
 
