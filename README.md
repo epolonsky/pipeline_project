@@ -160,7 +160,8 @@ After running the full pipeline with all test or real data, the following files 
 | `results/kallisto/{sample}/`              | Kallisto quantification output for each sample, including TPM values. |
 | `results/sleuth_significant.tsv`          | Sleuth results containing significant differentially expressed transcripts. |
 | `indexes/bowtie2_hcmv/`                   | Bowtie2 genome index for HCMV. |
-| `results/bowtie2/{sample}.mapped.bam`     | BAM file containing reads mapped to the HCMV genome. |
+| `results/bowtie2/{sample}.mapped_1.fastq`     | Fastq files containing reads mapped to the HCMV genome. |
+| `results/bowtie2/{sample}.mapped_2.fastq`     | Fastq files containing reads mapped to the HCMV genome. |
 | `spades/{sample}/contigs.fasta`           | SPAdes assembly contigs for each sample. |
 | `blast/{sample}.longest_contig.fasta`     | Longest contig from each SPAdes assembly for BLAST analysis. |
 | `blast/{sample}.blast.tsv`                | BLAST results of the longest contigs against the local Betaherpesvirinae database. |
