@@ -21,7 +21,7 @@ rule download_hcmv_reference:
         genome="ref/GCF_000845245.1_genome.fna"
     shell:
         """
-        mkdir -p ref/GCF_000845245.1
+        mkdir -p ref
         datasets download genome accession GCF_000845245.1 --include genome,cds --filename ref/ncbi_dataset.zip
         unzip -o ref/ncbi_dataset.zip -d ref/
         cp ref/ncbi_dataset/data/GCF_000845245.1/cds_from_genomic.fna {output.cds}
@@ -98,17 +98,18 @@ rule bowtie2_map:
         r2=FASTQ_DIR + "/{sample}_2.fastq",
         index="indexes/bowtie2_hcmv"
     output:
-        "results/bowtie2/{sample}.mapped.bam"
+        r1="results/bowtie2/{sample}.mapped_1.fastq",
+        r2="results/bowtie2/{sample}.mapped_2.fastq"
     shell:
         """
         mkdir -p results/bowtie2
-        bowtie2 -x {input.index}/bowtie2_index -1 {input.r1} -2 {input.r2} --no-unal | samtools view -bS - > {output}
+        bowtie2 -x {input.index}/bowtie2_index -1 {input.r1} -2 {input.r2} --no-unal | samtools fastq -1 {output.r1} -2 {output.r2} 
         """
 
 rule count_reads:
     input:
         r1=FASTQ_DIR + "/{sample}_1.fastq",
-        bam="results/bowtie2/{sample}.mapped.bam"
+        mapped_r1="results/bowtie2/{sample}.mapped_1.fastq"
     output:
         counts="counts/{sample}.counts.txt",
         report="results/report_reads_{sample}.txt"
@@ -116,7 +117,7 @@ rule count_reads:
         """
         mkdir -p counts
         original=$(($(wc -l < {input.r1})/4))
-        mapped=$(($(samtools view -c {input.bam}) / 2))
+        mapped=$(($(wc -l < {input.mapped_r1})/4))
         echo "original_reads: $original" > {output.counts}
         echo "mapped_reads: $mapped" >> {output.counts}
         echo "Sample {wildcards.sample} had $original read pairs before and $mapped read pairs after Bowtie2 filtering" > {output.report}
@@ -124,14 +125,14 @@ rule count_reads:
 
 rule spades_assembly:
     input:
-        "results/bowtie2/{sample}.mapped.bam"
+        r1="results/bowtie2/{sample}.mapped_1.fastq",
+        r2="results/bowtie2/{sample}.mapped_2.fastq"
     output:
         "spades/{sample}/contigs.fasta"
     shell:
         """
         mkdir -p spades/{wildcards.sample}
-        samtools fastq -1 spades/{wildcards.sample}/r1.fq -2 spades/{wildcards.sample}/r2.fq -0 /dev/null -s /dev/null {input}
-        spades.py -1 spades/{wildcards.sample}/r1.fq -2 spades/{wildcards.sample}/r2.fq --only-assembler -k 127 -o spades/{wildcards.sample}
+        spades.py -1 {input.r1} -2 {input.r2} --only-assembler -k 127 -o spades/{wildcards.sample}
         """
 
 rule get_longest_contig:
