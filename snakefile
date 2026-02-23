@@ -192,15 +192,11 @@ rule cleanup:
     shell:
         """
         rm -rf ncbi_dataset ncbi_dataset.zip
-        rm -rf indexes/bowtie2_hcmv
-        rm -rf results/bowtie2/*
+        rm -rf indexes/*
+        rm -rf results/*
         rm -rf counts/*
-        rm -rf results/kallisto/*
         rm -rf spades/*
         rm -rf blast/*
-        rm -f results/hcm_cds.fasta
-        rm -f results/hcmv_cds_counts.txt
-        rm -f indexes/hcmv_kallisto.idx
         rm -rf db/*
         rm -f PipelineReport.txt
         """
