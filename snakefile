@@ -192,11 +192,11 @@ rule cleanup:
     shell:
         """
         rm -rf ncbi_dataset ncbi_dataset.zip
-        rm -rf indexes/*
-        rm -rf results/*
-        rm -rf counts/*
-        rm -rf spades/*
-        rm -rf blast/*
-        rm -rf db/*
+        rm -rf indexes
+        rm -rf results
+        rm -rf counts
+        rm -rf spades
+        rm -rf blast
+        rm -rf db
         rm -f PipelineReport.txt
         """
