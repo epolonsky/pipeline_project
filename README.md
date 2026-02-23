@@ -1,4 +1,4 @@
-# Pipeline-project
+# pipeline_project
 Snakemake pipeline for HCMV transcriptome analysis. Automates quantification, differential expression, assembly, and strain comparison using kallisto, sleuth, Bowtie2, SPAdes, and BLAST. Includes test data and full documentation for reproducible runs.
 
 ## The pipeline automates the following tasks:
@@ -83,8 +83,8 @@ Each test file contains 10,000 reads for quick pipeline verification.
 ## After cloning the repository:
 
 ```bash
-git clone https://github.com/epolonsky/Pipeline-project.git
-cd Pipeline-project
+git clone https://github.com/epolonsky/pipeline_project.git
+cd pipeline-project
 ```
 ## Run the entire pipeline with sample data:
 
