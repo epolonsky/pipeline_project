@@ -163,7 +163,7 @@ rule blast_longest_contig:
     shell:
         """
         mkdir -p blast
-        blastn -query {input.fasta} -db db/betaherpesvirinae -out {output} -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle" -max_target_seqs 5 blastn -query {input.fasta} -db db/betaherpesvirinae -out {output} -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle" -max_target_seqs 5 -max_hsps 1
+        blastn -query {input.fasta} -db db/betaherpesvirinae -out {output} -outfmt "6 sacc pident length qstart qend sstart send bitscore evalue stitle" -max_target_seqs 5 -max_hsps 1
         """
 
 rule assemble_pipeline_report:
